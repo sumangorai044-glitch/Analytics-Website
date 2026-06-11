@@ -6,7 +6,7 @@ const products = [
 
 const productContainer = document.getElementById('products');
 
-// ✅ Render products
+// ✅ Render products on products page
 if (productContainer) {
   products.forEach(p => {
     const div = document.createElement('div');
@@ -20,35 +20,39 @@ if (productContainer) {
   });
 }
 
-// ✅ ✅ GLOBAL FUNCTION (IMPORTANT FIX)
+// ✅ ✅ GLOBAL addToCart (FIXED + GA tracking via dataLayer)
 window.addToCart = function(id) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   const product = products.find(p => p.id === id);
+
+  if (!product) {
+    console.error("❌ Product not found");
+    return;
+  }
 
   cart.push(product);
   localStorage.setItem('cart', JSON.stringify(cart));
 
   console.log("✅ Add to Cart clicked:", product.name);
 
-  // ✅ GA4 event tracking (SAFE CHECK)
-  if (typeof window.gtag === "function") {
-    window.gtag('event', 'add_to_cart', {
-      product_name: product.name,
-      product_price: product.price,
-      action_type: 'add_to_cart',
-      debug_mode: true
-    });
-    console.log("✅ GA event sent");
-  } else {
-    console.error("❌ gtag not available");
-  }
+  // ✅ ✅ PUSH EVENT TO dataLayer (guaranteed GA4 capture)
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'add_to_cart',
+    product_name: product.name,
+    product_price: product.price,
+    action_type: 'add_to_cart',
+    debug_mode: true
+  });
+
+  console.log("✅ dataLayer event pushed");
 
   alert(product.name + ' added to Cart');
 };
 
+// ✅ Render cart page
 const cartContainer = document.getElementById('cart');
 
-// ✅ Render cart
 if (cartContainer) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
