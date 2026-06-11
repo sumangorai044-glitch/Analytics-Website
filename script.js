@@ -33,7 +33,8 @@ function addToCart(id) {
     gtag('event', 'add_to_cart', {
       product_name: product.name,
       product_price: product.price,
-      action_type: 'add_to_cart'
+      action_type: 'add_to_cart',
+      debug_mode: true
     });
   }
 
