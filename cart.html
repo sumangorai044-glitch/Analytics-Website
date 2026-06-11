@@ -22,6 +22,10 @@ gtag('event', 'page_view', {page_type: 'Cart'});
 <script> 
 gtag('event', 'article_read', {reading_time: 120});
 </script>
+
+<script>function trackButtonClick() {
+gtag('event', 'button_click', { button_name: 'Contact Us', click_count: 1}); }  
+</script>
   
 </head>
 <body>
@@ -29,6 +33,7 @@ gtag('event', 'article_read', {reading_time: 120});
     <a href="index.html">Home</a>
     <a href="products.html">Products</a>
     <a href="cart.html">Cart</a>
+    <button onclick="trackButtonClick()">Contact us</button>
   </nav>
   <div class="container">
     <h1>Your Cart</h1>
