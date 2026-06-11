@@ -3,31 +3,42 @@
 <head>
   <title>My Shop - Home</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Adobe Launch -->
   <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-0JNYMWQ9Q7');
-</script>
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-<script> 
-gtag('event', 'page_view', {page_type: 'Index'});
-</script>
+    // ✅ Disable automatic page_view
+    gtag('config', 'G-0JNYMWQ9Q7', {
+      send_page_view: false
+    });
+  </script>
 </head>
+
 <body>
   <nav>
     <a href="index.html">Home</a>
     <a href="products.html">Products</a>
     <a href="cart.html">Cart</a>
   </nav>
+
   <div class="container">
     <h1>Welcome to My Shop</h1>
-    <p>Simple eCommerce website using HTML, CSS, JS</p>
+    <p>Simple eCommerce website</p>
     <a href="products.html" class="btn">Shop Now</a>
   </div>
+
+  <!-- ✅ Manual page_view (ONLY ONCE) -->
+  <script>
+    gtag('event', 'page_view', {
+      page_type: 'home'
+    });
+  </script>
 </body>
 </html>
