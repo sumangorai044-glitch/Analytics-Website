@@ -3,28 +3,38 @@
 <head>
   <title>Products</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
-</head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-0JNYMWQ9Q7');
-</script>
-<script> 
-gtag('event', 'page_view', {page_type: 'Products'});
-</script>
+  <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0JNYMWQ9Q7', {
+      send_page_view: false
+    });
+  </script>
+</head>
+
 <body>
   <nav>
     <a href="index.html">Home</a>
     <a href="products.html">Products</a>
     <a href="cart.html">Cart</a>
   </nav>
-  <h3>updated site</h3>
+
   <div class="container" id="products"></div>
+
   <script src="script.js"></script>
+
+  <!-- ✅ Manual page_view -->
+  <script>
+    gtag('event', 'page_view', {
+      page_type: 'products'
+    });
+  </script>
 </body>
 </html>
