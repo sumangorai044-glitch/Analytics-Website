@@ -6,6 +6,7 @@
   <title>My Shop - Home</title>
   <link rel="stylesheet" href="style.css">
 
+  <!-- 1. INDEPENDENT DATA LAYER (Declared first) -->
   <script>
     window.digitalData = {
       page: {
@@ -13,26 +14,41 @@
           pageName: "shop:home",
           pageType: "home"
         }
-      }
+      },
+      // Array to hold dynamic user interactions
+      events: [] 
     };
+
+    // Helper function to safely push events into our data layer
+    function pushDataLayerEvent(eventName, eventDetails = {}) {
+      window.digitalData.events.push({
+        event: eventName,
+        timestamp: new Date().getTime(),
+        ...eventDetails
+      });
+
+      // Custom Event listener for Adobe Launch to detect changes instantly
+      var evt = new CustomEvent('dataLayerEvent', { detail: eventName });
+      window.dispatchEvent(evt);
+    }
   </script>
 
+  <!-- 2. TRACKING TAGS (Loaded after data layer is ready) -->
+  <!-- Adobe Launch -->
   <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
 
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
-    // Disable automated tracking so it doesn't duplicate Adobe rules
-    gtag('config', 'G-0JNYMWQ9Q7', {
-      send_page_view: false
-    });
+    gtag('config', 'G-0JNYMWQ9Q7', { send_page_view: false });
   </script>
 </head>
 <body>
 
+  <!-- 3. CLEAN HTML LAYOUT (No inline tracking scripts) -->
   <nav>
     <a href="index.html">Home</a>
     <a href="products.html">Products</a>
@@ -49,11 +65,36 @@
     <button id="newsletter-submit-btn" class="primary-btn">Sign Up</button>
   </footer>
 
+  <!-- 4. INTERACTION SCRIPTS (Pushes raw actions to the data layer) -->
   <script>
-    gtag('event', 'page_view', {
-      page_type: window.digitalData.page.pageInfo.pageType,
-      page_title: window.digitalData.page.pageInfo.pageName,
-      debug_mode: true
+    // Trigger Page View on load
+    window.addEventListener('DOMContentLoaded', () => {
+      pushDataLayerEvent('page_view', {
+        pageName: window.digitalData.page.pageInfo.pageName,
+        pageType: window.digitalData.page.pageInfo.pageType
+      });
+      
+      // Keep Google Analytics sync'd with our data layer values
+      gtag('event', 'page_view', {
+        page_type: window.digitalData.page.pageInfo.pageType,
+        page_title: window.digitalData.page.pageInfo.pageName,
+        debug_mode: true
+      });
+    });
+
+    // Track Shop Now Link Click
+    document.getElementById('hero-shop-now-lnk').addEventListener('click', function(e) {
+      pushDataLayerEvent('link_click', {
+        clickText: 'Shop Now Link',
+        targetUrl: this.href
+      });
+    });
+
+    // Track Newsletter Button Click
+    document.getElementById('newsletter-submit-btn').addEventListener('click', function() {
+      pushDataLayerEvent('newsletter_signup', {
+        buttonName: 'Newsletter Sign Up'
+      });
     });
   </script>
 </body>
