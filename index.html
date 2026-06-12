@@ -1,45 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Shop - Home</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Adobe Launch -->
+  <script>
+    window.digitalData = {
+      page: {
+        pageInfo: {
+          pageName: "shop:home",
+          pageType: "home"
+        }
+      }
+    };
+  </script>
+
   <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
 
-  <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    // ✅ Disable automatic page_view
+    // Disable automated tracking so it doesn't duplicate Adobe rules
     gtag('config', 'G-0JNYMWQ9Q7', {
       send_page_view: false
     });
   </script>
 </head>
-
 <body>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="products.html">Products</a>
     <a href="cart.html">Cart</a>
   </nav>
 
-  <button id="newsletter-submit-btn" class="primary-btn">Sign Up</button>
-
-  <div class="container">
+  <main class="container">
     <h1>Welcome to My Shop</h1>
     <p>Simple eCommerce website</p>
-    <a href="products.html" class="btn">Shop Now</a>
-  </div>
+    <a href="products.html" id="hero-shop-now-lnk" class="btn">Shop Now</a>
+  </main>
 
-  <!-- ✅ Manual page_view (ONLY ONCE) -->
+  <footer>
+    <button id="newsletter-submit-btn" class="primary-btn">Sign Up</button>
+  </footer>
+
   <script>
     gtag('event', 'page_view', {
-      page_type: 'home',
+      page_type: window.digitalData.page.pageInfo.pageType,
+      page_title: window.digitalData.page.pageInfo.pageName,
       debug_mode: true
     });
   </script>
