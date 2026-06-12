@@ -1,101 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Shop - Home</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- 1. INDEPENDENT DATA LAYER (Declared first) -->
-  <script>
-    window.digitalData = {
-      page: {
-        pageInfo: {
-          pageName: "shop:home",
-          pageType: "home"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Element Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
         }
-      },
-      // Array to hold dynamic user interactions
-      events: [] 
-    };
 
-    // Helper function to safely push events into our data layer
-    function pushDataLayerEvent(eventName, eventDetails = {}) {
-      window.digitalData.events.push({
-        event: eventName,
-        timestamp: new Date().getTime(),
-        ...eventDetails
-      });
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-      // Custom Event listener for Adobe Launch to detect changes instantly
-      var evt = new CustomEvent('dataLayerEvent', { detail: eventName });
-      window.dispatchEvent(evt);
-    }
-  </script>
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
 
-  <!-- 2. TRACKING TAGS (Loaded after data layer is ready) -->
-  <!-- Adobe Launch -->
-  <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
+        h1 {
+            margin-bottom: 25px;
+            color: var(--primary-color);
+        }
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-0JNYMWQ9Q7', { send_page_view: false });
-  </script>
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: #10b981;
+        }
+        .btn-secondary:hover {
+            background-color: #059669;
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Hidden template for the PDF generation */
+        #pdf-template {
+            display: none;
+            padding: 40px;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .pdf-header {
+            border-bottom: 2px solid #4f46e5;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .pdf-section {
+            margin-bottom: 25px;
+        }
+        .pdf-placeholder-line {
+            height: 15px;
+            background-color: #f3f4f6;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- 3. CLEAN HTML LAYOUT (No inline tracking scripts) -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="cart.html">Cart</a>
-  </nav>
+    <div class="container">
+        <h1>Interactive Web Dashboard</h1>
+        
+        <div class="button-group">
+            <button class="btn" onclick="changeVideo()">Shuffle Video</button>
+            
+            <button class="btn btn-secondary" onclick="goToRandomWebsite()">Surprise Website</button>
+            
+            <button class="btn btn-danger" onclick="downloadPDF()">Download PDF</button>
+        </div>
 
-  <main class="container">
-    <h1>Welcome to My Shop</h1>
-    <p>Simple eCommerce website</p>
-    <a href="products.html" id="hero-shop-now-lnk" class="btn">Shop Now</a>
-  </main>
+        <div class="video-container">
+            <iframe id="youtube-player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        </div>
+    </div>
 
-  <footer>
-    <button id="newsletter-submit-btn" class="primary-btn">Sign Up</button>
-  </footer>
+    <div id="pdf-template">
+        <div class="pdf-header">
+            <h1 style="color: #4f46e5; margin: 0;">Generated Document Report</h1>
+            <p style="color: #666; font-size: 0.9rem;">Date: <span id="pdf-date"></span></p>
+        </div>
+        
+        <div class="pdf-section">
+            <h2 style="color: #1f2937;">1. Executive Summary</h2>
+            <div class="pdf-placeholder-line" style="width: 100%;"></div>
+            <div class="pdf-placeholder-line" style="width: 95%;"></div>
+            <div class="pdf-placeholder-line" style="width: 40%;"></div>
+        </div>
 
-  <!-- 4. INTERACTION SCRIPTS (Pushes raw actions to the data layer) -->
-  <script>
-    // Trigger Page View on load
-    window.addEventListener('DOMContentLoaded', () => {
-      pushDataLayerEvent('page_view', {
-        pageName: window.digitalData.page.pageInfo.pageName,
-        pageType: window.digitalData.page.pageInfo.pageType
-      });
-      
-      // Keep Google Analytics sync'd with our data layer values
-      gtag('event', 'page_view', {
-        page_type: window.digitalData.page.pageInfo.pageType,
-        page_title: window.digitalData.page.pageInfo.pageName,
-        debug_mode: true
-      });
-    });
+        <div class="pdf-section">
+            <h2 style="color: #1f2937;">2. Data Analysis & Insights</h2>
+            <div class="pdf-placeholder-line" style="width: 100%;"></div>
+            <div class="pdf-placeholder-line" style="width: 85%;"></div>
+            <div class="pdf-placeholder-line" style="width: 90%;"></div>
+            <div class="pdf-placeholder-line" style="width: 60%;"></div>
+        </div>
 
-    // Track Shop Now Link Click
-    document.getElementById('hero-shop-now-lnk').addEventListener('click', function(e) {
-      pushDataLayerEvent('link_click', {
-        clickText: 'Shop Now Link',
-        targetUrl: this.href
-      });
-    });
+        <div class="pdf-section">
+            <h2 style="color: #1f2937;">3. Conclusion & Next Steps</h2>
+            <div class="pdf-placeholder-line" style="width: 95%;"></div>
+            <div class="pdf-placeholder-line" style="width: 30%;"></div>
+        </div>
+    </div>
 
-    // Track Newsletter Button Click
-    document.getElementById('newsletter-submit-btn').addEventListener('click', function() {
-      pushDataLayerEvent('newsletter_signup', {
-        buttonName: 'Newsletter Sign Up'
-      });
-    });
-  </script>
+    <script>
+        // Array of curated YouTube Video IDs
+        const videoIds = [
+            'dQw4w9WgXcQ', // Rick Astley
+            '9bZkp7q19f0', // PSY - GANGNAM STYLE
+            'kJQP7kiw5Fk', // Despacito
+            'jNQXAC9IVRw', // Me at the zoo (First YT video)
+            '9767_RkY6Zk', // Lofi Hip Hop
+            'W3q8Od5qJio', // Maroon 5 - Sugar
+            'V1Pl8CzNzCw'  // Billie Eilish - Bad Guy
+        ];
+
+        // Array of random external websites
+        const websites = [
+            'https://www.wikipedia.org',
+            'https://www.github.com',
+            'https://www.reddit.com',
+            'https://www.nasa.gov',
+            'https://www.ted.com',
+            'https://www.bbc.com',
+            'https://www.nature.com'
+        ];
+
+        // Function to shuffle and change the YouTube Video
+        function changeVideo() {
+            const player = document.getElementById('youtube-player');
+            const currentSrc = player.src;
+            let randomId;
+            
+            // Loop to ensure we get a different video than the one currently playing
+            do {
+                randomId = videoIds[Math.floor(Math.random() * videoIds.length)];
+            } while (currentSrc.includes(randomId));
+
+            player.src = `https://www.youtube.com/embed/${randomId}?autoplay=1`;
+        }
+
+        // Function to open a random website in a new tab
+        function goToRandomWebsite() {
+            const randomUrl = websites[Math.floor(Math.random() * websites.length)];
+            window.open(randomUrl, '_blank');
+        }
+
+        // Function to generate and download the PDF
+        function downloadPDF() {
+            // Set current date in the PDF template dynamically
+            document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
+
+            const element = document.getElementById('pdf-template');
+            
+            // Temporarily show element for html2pdf to capture it accurately
+            element.style.display = 'block';
+
+            const options = {
+                margin:       10,
+                filename:     'Generated_Report.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate PDF, then hide the template container again
+            html2pdf().from(element).set(options).save().then(() => {
+                element.style.display = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
