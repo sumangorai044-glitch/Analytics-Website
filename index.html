@@ -154,62 +154,7 @@
             border-radius: 4px;
         }
     </style>
-    <script>
-        
-         
-        /* Page Loaded Event */
-        gtag('event', 'page_loaded', {
-          page_name: 'Interactive Dashboard',
-          page_type: 'dashboard'
-        });
-         
-        /* Shuffle Video Tracking */
-        const originalChangeVideo = changeVideo;
-        changeVideo = function() {
-          gtag('event', 'video_shuffle', {
-            button_name: 'Shuffle Video',
-            click_count: 1
-          });
-         
-          originalChangeVideo();
-        };
-         
-        /* Surprise Website Tracking */
-        const originalGoToRandomWebsite = goToRandomWebsite;
-        goToRandomWebsite = function() {
-          gtag('event', 'website_surprise', {
-            button_name: 'Surprise Website',
-            click_count: 1
-          });
-         
-          originalGoToRandomWebsite();
-        };
-         
-        /* PDF Download Tracking */
-        const originalDownloadPDF = downloadPDF;
-        downloadPDF = function() {
-          gtag('event', 'pdf_download', {
-            button_name: 'Download PDF',
-            download_count: 1
-          });
-         
-          originalDownloadPDF();
-        };
-         
-        /* Static PDF Link Tracking */
-        document.addEventListener('DOMContentLoaded', function() {
-          const pdfLink = document.querySelector('a');
-         
-          if (pdfLink) {
-            pdfLink.addEventListener('click', function() {
-              gtag('event', 'link_click', {
-                link_text: this.textContent,
-                click_count: 1
-              });
-            });
-          }
-        });
-    </script>
+    
 </head>
 <body>
         <!-- Google Tag Manager (noscript) -->
