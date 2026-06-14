@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
-     <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
-
+    <script src="https://assets.adobedtm.com/236ca7d75265/fd64c17e1360/launch-8b369c725698-development.min.js" async></script>
+    
   <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JNYMWQ9Q7"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+     
+    gtag('config', 'G-0JNYMWQ9Q7', {
+      debug_mode: true
+    });
+     
+    gtag('event', 'page_loaded', {
+      page_name: 'Interactive Dashboard',
+      page_type: 'dashboard'
+    });
+    </script>
     <script>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -280,20 +294,30 @@
 
         // Function to shuffle and change the YouTube Video
         function changeVideo() {
+ 
+            gtag('event', 'video_shuffle', {
+                button_name: 'Shuffle Video',
+                click_count: 1
+            });
+         
             const player = document.getElementById('youtube-player');
             const currentSrc = player.src;
             let randomId;
-            
-            // Loop to ensure we get a different video than the one currently playing
+         
             do {
                 randomId = videoIds[Math.floor(Math.random() * videoIds.length)];
             } while (currentSrc.includes(randomId));
-
+         
             player.src = `https://www.youtube.com/embed/${randomId}?autoplay=1`;
         }
-
         // Function to open a random website in a new tab
         function goToRandomWebsite() {
+ 
+            gtag('event', 'website_surprise', {
+                button_name: 'Surprise Website',
+                click_count: 1
+            });
+         
             const randomUrl = websites[Math.floor(Math.random() * websites.length)];
             window.open(randomUrl, '_blank');
         }
@@ -323,5 +347,22 @@
         }
     </script>
     <div style="height: 150vh;"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+         
+            const pdfLink = document.querySelector('a');
+         
+            if (pdfLink) {
+                pdfLink.addEventListener('click', function() {
+         
+                    gtag('event', 'link_click', {
+                        link_text: this.textContent,
+                        click_count: 1
+                    });
+         
+                });
+            }
+         
+        });
 </body>
 </html>
