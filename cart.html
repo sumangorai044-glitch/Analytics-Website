@@ -17,6 +17,48 @@
       send_page_view: false
     });
   </script>
+  
+  <script>
+    gtag('event', 'page_view', {
+      page_type: 'cart',
+      debug_mode: true
+    });
+  </script>
+  
+  <script>
+    document.querySelectorAll('nav a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        gtag('event', 'nav_click', {
+          nav_link: this.textContent
+        });
+      });
+    });
+  </script>
+
+  <script>
+    gtag('event', 'page_loaded', {
+      page_name: 'Cart Page'
+    });
+  </script>
+
+  <script>
+    document.querySelectorAll('nav a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        gtag('event', 'link_click', {
+          click_count: 1
+        });
+      });
+    });
+  </script>
+
+  <script>
+    gtag('event', 'cart_view', {
+      cart_items: 3
+    });
+  </script>
+
+  
+
 </head>
 
 <body>
@@ -28,17 +70,12 @@
 
   <div class="container">
     <h1>Your Cart</h1>
-    <div id="cart"></div>
+    <div id="cart">3 Items</div>
   </div>
 
   <script src="script.js"></script>
 
   <!-- ✅ Manual page_view -->
-  <script>
-    gtag('event', 'page_view', {
-      page_type: 'cart',
-      debug_mode: true
-    });
-  </script>
+  
 </body>
 </html>
