@@ -155,14 +155,7 @@
         }
     </style>
     <script>
-        /* GA4 Initialization */
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-         
-        gtag('config', 'G-0JNYMWQ9Q7', {
-          debug_mode: true
-        });
+        
          
         /* Page Loaded Event */
         gtag('event', 'page_loaded', {
@@ -324,27 +317,48 @@
 
         // Function to generate and download the PDF
         function downloadPDF() {
-            // Set current date in the PDF template dynamically
-            document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
-
-            const element = document.getElementById('pdf-template');
-            
-            // Temporarily show element for html2pdf to capture it accurately
-            element.style.display = 'block';
-
-            const options = {
-                margin:       10,
-                filename:     'Generated_Report.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, logging: false },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            // Generate PDF, then hide the template container again
-            html2pdf().from(element).set(options).save().then(() => {
-                element.style.display = 'none';
-            });
+ 
+    gtag('event', 'pdf_download', {
+        button_name: 'Download PDF',
+        download_count: 1
+    });
+ 
+    // Set current date in the PDF template dynamically
+    document.getElementById('pdf-date').innerText =
+        new Date().toLocaleDateString();
+ 
+    const element = document.getElementById('pdf-template');
+ 
+    // Temporarily show element for html2pdf to capture it accurately
+    element.style.display = 'block';
+ 
+    const options = {
+        margin: 10,
+        filename: 'Generated_Report.pdf',
+        image: {
+            type: 'jpeg',
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: 2,
+            logging: false
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
         }
+    };
+ 
+    // Generate PDF, then hide the template container again
+    html2pdf()
+        .from(element)
+        .set(options)
+        .save()
+        .then(() => {
+            element.style.display = 'none';
+        });
+}
     </script>
     <div style="height: 150vh;"></div>
     <script>
@@ -364,5 +378,6 @@
             }
          
         });
+    </script>
 </body>
 </html>
