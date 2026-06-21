@@ -236,7 +236,9 @@
  
             gtag('event', 'video_shuffle', {
                 button_name: 'Shuffle Video',
-                click_count: 1
+                click_count: 1,
+                page_name: 'Interactive Dashboard',
+                page_type: 'dashboard'
             });
          
             const player = document.getElementById('youtube-player');
@@ -254,7 +256,9 @@
  
             gtag('event', 'website_surprise', {
                 button_name: 'Surprise Website',
-                click_count: 1
+                click_count: 1,
+                page_name: 'Interactive Dashboard',
+                page_type: 'dashboard'
             });
          
             const randomUrl = websites[Math.floor(Math.random() * websites.length)];
@@ -266,7 +270,8 @@
  
     gtag('event', 'pdf_download', {
         button_name: 'Download PDF',
-        
+        page_name: 'Interactive Dashboard',
+        page_type: 'dashboard'
     });
  
     // Set current date in the PDF template dynamically
@@ -317,7 +322,9 @@
          
                     gtag('event', 'link_click', {
                         link_text: this.textContent,
-                        click_count: 1
+                        click_count: 1,
+                        page_name: 'Interactive Dashboard',
+                        page_type: 'dashboard'
                     });
          
                 });
